@@ -1,0 +1,4 @@
+venv\Scripts\activate
+python train.py
+python test.py
+python uji_gambar.py (keluar pencet ctrl+c)

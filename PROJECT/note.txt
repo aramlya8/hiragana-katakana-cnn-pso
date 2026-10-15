@@ -1,0 +1,92 @@
+1. jalankan di python train.py setelah itu,
+2. jalankan di python test.py
+
+TRAIN.PY ialah PROGRAM UTAMA
+Karena:
+~~~ di sanalah model DIBUAT
+~~~ di sanalah bobot DILATIH
+~~~ di sanalah Firefly DIJALANKAN
+~~~ di sanalah model DISIMPAN
+
+TEST.PY ialah PROGRAM LANJUTAN
+Fungsinya:
+~~~ hanya MEMBACA model
+~~~ tidak mengubah bobot
+~~~ hanya EVALUASI
+
+ANALOGI SEDERHANA (BIAR MELEK)
+| Analogi    | Train.py | Test.py |
+| ---------- | -------- | ------- |
+| Belajar    | ✔        | ❌     |
+| Ujian      | ❌       | ✔      |
+| Buat otak  | ✔        | ❌     |
+| Pakai otak | ❌       | ✔      |
+
+RINGKASAN OUTPUT TRAIN.PY
+| Jenis      | Ada / Tidak       |
+| ---------- | ----------------- |
+| Log epoch  | ✅                 |
+| Loss       | ✅                 |
+| Accuracy   | ✅                 |
+| Firefly    | ❌ (kecuali print) |
+| File model | ✅                 |
+| Evaluasi   | ❌                 |
+
+
+isi dari train.py
+~~ training cnn
+~~ feedforward
+~~ BCE
+~~ Backpropagation
+
+isi dari test.py dan akurasi.py
+~~ confusion matrix
+~~ accuracy, precision, recall, f1-score
+
+isi dari mode.h5
+~~ bukti hasil training
+
+PEMETAAN KODE
+| Flowchart     | Rumus                   | Kode                                  |
+| ------------- | ----------------------- | ------------------------------------- |
+| Preprocessing | Resize, grayscale, norm | `ImageDataGenerator + preprocessing/` |
+| Augmentasi    | ( I_{aug} = T(I) )      | `rotation_range, zoom_range`          |
+| CNN           | Convolution, ReLU       | `Conv2D`                              |
+| Pooling       | max                     | `MaxPooling2D`                        |
+| Flatten       | vektor                  | `Flatten()`                           |
+| FC            | ( wx+b )                | `Dense()`                             |
+| Sigmoid       | ( \sigma(x) )           | `activation='sigmoid'`                |
+| BCE           | loss                    | `binary_crossentropy`                 |
+| Backprop      | gradien                 | `optimizer='adam'`                    |
+| Evaluasi      | CM, Acc, dll            | `confusion_matrix()`                  |
+
+pipeline.py dipakai di train.py saat load dataset
+
+8️⃣ Rangkuman Alur Feedforward (DARI PIPELINE)
+𝑋(0)→𝐶𝑜𝑛𝑣→𝑅𝑒𝐿𝑈→𝑃𝑜𝑜𝑖𝑛𝑔→𝐶𝑜𝑛𝑣→𝑅𝑒𝐿𝑈→𝑃𝑜𝑜𝑙𝑖𝑛𝑔→Flatten→𝐷𝑒𝑛𝑠𝑒→𝑆𝑖𝑔𝑚𝑜𝑖𝑑→𝑦^X(0)
+
+9️⃣ Hubungan Rumus ↔ Kode (SANGAT PENTING)
+Tahap	Rumus	Kode
+Input	
+28
+×
+28
+×
+1
+28×28×1	reshape
+Convolution	ΣX·K + b	Conv2D
+ReLU	max(0,x)	activation='relu'
+Pooling	max window	MaxPooling2D
+Flatten	reshape vektor	Flatten()
+FC	Σwx + b	Dense()
+Sigmoid	1/(1+e⁻ˣ)	activation='sigmoid'
+
+7️⃣ Jawaban SIAP SIDANG (Jika Ditanya)
+
+“Apakah Firefly menggantikan backpropagation?”
+
+Jawaban aman:
+
+Tidak. Backpropagation tetap digunakan pada proses training CNN, sedangkan algoritma Firefly digunakan sebagai metode
+ optimasi tambahan terhadap bobot hasil training
+~~~ Pipeline → CNN → Feedforward → BCE → Backprop → Firefly → Save Model
